@@ -670,7 +670,7 @@ let studentName = '';
 // This page now calls a private Cloudflare Worker proxy instead of Anthropic
 // directly, so the real API key never touches the browser. Fill in your
 // Worker's URL below after deploying it (see the deployment walkthrough).
-const API_PROXY_URL = "PASTE_YOUR_CLOUDFLARE_WORKER_URL_HERE";
+const API_PROXY_URL = "https://pogil-proxy.nroster.workers.dev/";
 let stepIdx = 0;
 let chosenExtension = null;
 let histories = STEPS.map(()=>[]); // per-step message log {speaker,type,text,explanation,flagState}
