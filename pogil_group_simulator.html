@@ -817,7 +817,7 @@ function clearFlag(idx){
 // anywhere else. Trade-off: scoped to one browser, not one account.
 async function saveProgress(){
   try{
-    localStorage.setItem('pogil_progress', JSON.stringify({
+    localStorage.setItem('pogil_progress_scientific_inquiry', JSON.stringify({
       stepIdx, chosenExtension, histories, groupSummaries, scores, activeSeconds
     }));
   }catch(e){
@@ -827,7 +827,7 @@ async function saveProgress(){
 
 async function loadProgress(){
   try{
-    const raw = localStorage.getItem('pogil_progress');
+    const raw = localStorage.getItem('pogil_progress_scientific_inquiry');
     return raw ? JSON.parse(raw) : null;
   }catch(e){
     return null; // nothing saved yet, or storage unavailable -- start fresh
@@ -836,7 +836,7 @@ async function loadProgress(){
 
 async function clearProgress(){
   try{
-    localStorage.removeItem('pogil_progress');
+    localStorage.removeItem('pogil_progress_scientific_inquiry');
   }catch(e){ /* nothing to clear */ }
 }
 

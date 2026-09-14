@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Selection and Speciation — Group Simulator</title>
+<title>Phylogenetic Trees — Group Simulator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -443,7 +443,7 @@
   <div id="mainApp" style="display:none;">
   <header>
     <div class="eyebrow">Solo Online Lab Group</div>
-    <h1>Selection and Speciation</h1>
+    <h1>Phylogenetic Trees</h1>
     <div class="sub" id="subline">You're sitting in with Jordan, Maya &amp; Theo. One of them is occasionally wrong on purpose — catch it.</div>
     <div class="progress" id="progress"></div>
     <div class="scoreboard" id="scoreboard">Flags: <b>0</b> caught · <b>0</b> false alarms</div>
@@ -459,13 +459,13 @@
 
   <div class="handout-note" id="handoutNote">
     <span class="flagicon" style="font-size:15px;" aria-hidden="true">📓</span>
-    <span>Have your printed or digital copy of the original POGIL handout open beside you — the group will refer to <b>Model 1</b> (the selection graphs) and <b>Model 2</b> (the reproductive isolation diagram) that aren't fully reproduced here.</span>
+    <span>Have your printed or digital copy of the original POGIL handout open beside you — the group will refer to <b>Model 1</b> (the phylogenetic tree), <b>Model 2</b> (the DNA samples), and <b>Model 3</b> (the cytochrome c table) that aren't fully reproduced here.</span>
     <button id="dismissNote" aria-label="Dismiss">&times;</button>
   </div>
 
   <div class="handout-note extension-note" id="extensionReminder" style="display:none;">
     <span class="flagicon" style="font-size:16px;" aria-hidden="true">📌</span>
-    <span>Almost done! The <b>Extension Questions (Model 3 — Genetic Drift)</b> aren't part of this simulator — complete them on your own in your handout and turn them in separately.</span>
+    <span>Almost done! The <b>Extension Questions (the molecular clock graph, Q27–30)</b> aren't part of this simulator — complete them on your own in your handout and turn them in separately.</span>
   </div>
 
   <main class="paper">
@@ -501,143 +501,233 @@ const PERSONAS = {
 const STUDENT_ICON = `<svg viewBox="0 0 24 24" class="avatar-icon"><path d="M12 3L1 8l11 5 11-5-11-5z" fill="currentColor"/><path d="M6 11v4.2c0 1.6 2.9 3.3 6 3.3s6-1.7 6-3.3V11l-6 2.7L6 11z" fill="currentColor"/><rect x="19.3" y="9" width="1.3" height="7" rx="0.6" fill="currentColor"/></svg>`;
 
 
-const MODEL1_REFERENCE = `Model 1 in the students' printed handout is titled "Three Types of Selection." It shows three separate graphs, labeled A, B, and C, sharing the same two axes: "Number of Individuals" (vertical) and "Body Size (g)" (horizontal). Each graph shows two overlapping distributions -- a dashed-outline curve labeled "Original population," and a solid gray-shaded curve labeled "Population after selection" (this key/legend appears once, next to graph C).
+const MODEL1_REFERENCE = `Model 1 in the students' printed handout is titled "Phylogenetic Trees." It's a branching tree diagram with a horizontal time axis labeled "Millions of Years Ago," running from 40 down to 0 (left = older, right = present day).
 
-Graph A is titled "Directional Selection." The original population is a single bell-shaped curve. The population after selection is also a single bell-shaped curve, but the whole thing has SHIFTED toward the larger end of the body-size axis -- selection favored bigger individuals, moving the whole distribution in one direction.
+The tree's root is a box labeled "Common ancestor of all modern Raccoons, Pandas, and Bears," positioned at approximately 27-28 million years ago (visually close to, but not exactly on, the 30 mark). When a question asks "how long ago," treat this as approximately 30 million years ago, matching how the worksheet's own questions refer to it.
 
-Graph B is titled "Disruptive Selection." The original population is a single bell-shaped curve centered in the middle of the range. The population after selection is BIMODAL -- it has split into two separate peaks, one toward the smaller end and one toward the larger end of the body-size range, with a dip in the middle where the original single peak used to be. Selection favored both extremes over the middle.
+From that root, the tree splits into exactly two lineages:
+1. Raccoon + Red Panda -- these two are sister taxa, splitting from each other more recently than the root (no exact million-year mark is given for this specific split, only that it's after the root).
+2. The Panda/Bear lineage, which itself splits further into:
+   a. Giant Panda -- branches off on its own, BEFORE the point marked with an asterisk (*) on the diagram. Giant Panda is NOT part of the "true bear" clade below.
+   b. The asterisk-marked node (*) -- the common ancestor of the "true bears." This node splits FOUR WAYS AT ONCE (not one at a time) into: Spectacled Bear, Sloth Bear, Sun Bear, and a fourth branch that splits further into Black Bear, then Polar Bear and Brown Bear (Black Bear branches off first from that sub-group; Polar Bear and Brown Bear are sister taxa, splitting from each other most recently of the three).
 
-Graph C is titled "Stabilizing Selection." The original population is a WIDE bell-shaped curve (a lot of spread). The population after selection is a NARROWER bell-shaped curve centered at roughly the same middle body size as the original -- both extremes were selected against, so variation decreased while the average stayed about the same.
+Derived facts (already worked out from this structure -- use these directly, do not re-derive them differently):
+- The root split (Raccoon+Red Panda vs. the Panda/Bear lineage) is the "two lines that diverged 30 million years ago."
+- Modern descendants of the asterisk-marked point: exactly six organisms -- Spectacled Bear, Sloth Bear, Sun Bear, Black Bear, Polar Bear, and Brown Bear. Giant Panda is explicitly NOT among them.
+- Brown Bear's most recent common ancestor is shared with Polar Bear (they're sister taxa).
+- The Panda/Bear lineage (7 living descendants: Giant Panda + 6 true bears) has more living descendants than the Raccoon/Red Panda lineage (2 living descendants).
+- Red Panda's closest relative on this tree is Raccoon (they're sister taxa).
+- Giant Panda and Polar Bear are MORE closely related than Giant Panda and Red Panda -- Giant Panda and Polar Bear share a common ancestor at the Giant-Panda-vs-true-bears split (younger than the root), while Giant Panda and Red Panda only share a common ancestor all the way back at the root itself (the oldest point on the whole tree).
+- The exact divergence time of Giant Panda from the true-bear lineage is NOT given precisely on this diagram -- only that it happened sometime after the root split and before the asterisk-marked split. Do not invent a specific million-year figure for this one; reason about it in relative terms (after the root, before the asterisk) if it comes up.`;
 
-Important: do not invent specific numeric values for the axes -- the point of each graph is the SHAPE of the change (shift right / split into two peaks / narrow around the same center), not precise numbers, and the exact numbers are not something you can see.`;
+const MODEL2_REFERENCE = `Model 2 in the students' printed handout is titled "DNA Sample Comparison." It shows five DNA strands, each 21 bases long, drawn as ladder-like strips: one strand labeled "DNA from organism A, attached to a nitrocellulose membrane" (drawn horizontally along a shaded bar), and four separate strips labeled Sample 1, Sample 2, Sample 3, and Sample 4 (drawn at different angles/positions around it, not in numerical order on the page).
 
-const MODEL2_REFERENCE = `Model 2 in the students' printed handout is titled "Reproductive Isolation." It's a 2-row, 3-column grid of six small illustrated panels, each showing a pair of organisms (labeled with letters) and a stated outcome.
+Exact confirmed sequences (verified directly against the image, do not alter):
+Organism A: G T G A A A C C T T C A T C G T C C A A G
+Sample 1:   C A G T T T G G A C C T A A C A G C T T C
+Sample 2:   G A T T C G G A A C T T C G T G G T T A C
+Sample 3:   C A C T T T G G A A G T A G C A G G T T C
+Sample 4:   G T T T C A G A A C T T G G T G C T A T C
 
-Top row -- these three pairs DO produce offspring together:
-- Organisms A & B: produce offspring, and ARE stated to be the same species.
-- Organisms C & D: produce offspring, but are stated to NOT be the same species (conceptually parallel to a horse and donkey producing a mule -- the offspring exists, but the parents are still considered separate species).
-- Organisms E & F: produce offspring, but that offspring does not live to reproduce, and E & F are stated to NOT be the same species (the hybrid offspring dies before it can reproduce).
+All five strands are 21 bases long.
 
-Bottom row -- these three pairs do NOT produce offspring at all, each for a different stated reason:
-- Organisms G & H: live in separate geological areas, so mating is not possible -- NOT the same species (geographic isolation).
-- Organisms I & J: do not have compatible reproductive organs, so mating is not possible -- NOT the same species (mechanical/reproductive incompatibility).
-- Organisms K & L: feed from different sources and are not likely to mate -- NOT the same species (behavioral/ecological isolation).
+Complementarity (A pairs with T, G pairs with C), checked position-by-position against Organism A -- these exact numbers are already calculated, use them directly rather than recomputing on the fly:
+- Sample 3: 21/21 complementary -- 0 mismatches -- 0% sequence divergence. This is the ONE value the worksheet itself already gives students as an example in the Q14 table, so it should never be presented as something still to be figured out.
+- Sample 1: 16/21 complementary -- 5 mismatches -- approximately 23.8% sequence divergence.
+- Sample 2: 9/21 complementary -- 12 mismatches -- approximately 57.1% sequence divergence.
+- Sample 4: 7/21 complementary -- 14 mismatches -- approximately 66.7% sequence divergence.
 
-Important: A & B is the ONLY pair explicitly stated to be the same species. Every other pair (C&D, E&F, G&H, I&J, K&L) is explicitly stated to NOT be the same species, each for the specific reason given above -- never blur these or imply any other pair is the same species.`;
+So: Sample 3 is the perfect (100%) complementary match to Organism A. Sample 1 is the next-closest match. Ordered most to least homologous (closest to most distant relative): Sample 3, Sample 1, Sample 2, Sample 4.
+
+The phylogenetic tree the worksheet asks students to fill in (Question 17) is a simple ladder/pectinate shape branching off "Common Ancestor" one tip at a time. Top-to-bottom order, matching the divergence values above: Sample 4 (earliest split, most distant), then Sample 2, then Sample 1, then Sample 3 (most recent split, closest relative, at the very bottom alongside Sample 1 as the most closely related pair).`;
+
+const MODEL3_REFERENCE = `Model 3 in the students' printed handout is titled "Comparing the Cytochrome c Gene." It's a large table of amino acid sequences (112 positions each) for the cytochrome c protein across eight species: Human, Tuna, Whale, Rhesus Monkey (R. Monkey), Chicken, Pig, Yeast, and Fly. Positions are laid out in three blocks (roughly positions 1-40, 41-77, 78-112). An asterisk (*) at a position means "no amino acid at this position" for that species (explicitly noted at the bottom of the table) -- these are real gaps in the sequence, not missing data.
+
+This table has been verified directly against the image, matching the text version exactly -- no transcription errors were found.
+
+Exact number of amino acid differences between Human and each other species (already computed by comparing all 112 positions directly -- present these as established facts, do not re-derive or guess at them):
+- Rhesus Monkey: 1 difference (by far the closest)
+- Whale: 10 differences
+- Pig: 10 differences (TIED with Whale -- see note below)
+- Chicken: 13 differences
+- Tuna: 21 differences
+- Fly: 27 differences
+- Yeast: 45 differences (by far the most distant)
+
+IMPORTANT -- the Whale/Pig tie: Whale and Pig are tied at exactly 10 differences each. This is a genuine tie in the data, not an error or something to resolve by picking one arbitrarily. When the group discusses which is "more closely related" between these two, or where to place them on the Question 22 tree, treat this explicitly as an ambiguous call that the worksheet's data doesn't resolve on its own -- a real research biologist would need more genes or an outgroup comparison to break this particular tie. Encourage genuine group discussion and a justified choice rather than presenting either order as the single correct answer.
+
+So: Rhesus Monkey is the most closely related organism to humans in this data (1 difference), and Yeast is the most distantly related (45 differences). The Question 22 tree (ladder-style, branching toward Human at the bottom) should be ordered, top to bottom (most to least different from Human): Yeast, Fly, Tuna, Chicken, then Whale and Pig (tied, either order defensible), then Rhesus Monkey, then Human.`;
 
 const GROUPS = [
 {
   title: "Q1 — Reading Model 1",
   questions: [
-    `What variables do the graphs in Model 1 compare?`
+    `How long ago did the common ancestor of all the organisms on this phylogenetic tree exist?`,
+    `Which two lines diverged 30 million years ago?`,
+    `List all modern descendants of the organism that was alive at the point indicated by the asterisk.`
   ]
 },
 {
-  title: "Q2 — Three types of selection",
+  title: "Q2 — Giant Panda's divergence",
   questions: [
-    `What are the three types of selection illustrated in the graphs in Model 1?`
+    `According to Model 1, when did the Giant Panda line diverge from the line that led to modern bears?`
   ]
 },
 {
-  title: "Q3 — Where does the variation come from?",
+  title: "Q3 — Brown Bear's closest relative",
   questions: [
-    `According to the graphs in Model 1, there is variation in body mass within the original population. Using your knowledge of genetics, describe how this variation is possible.`
+    `According to Model 1, what animal shares the most recent common ancestor with the Brown Bear?`
   ]
 },
 {
-  title: "Q4 — Graph A: Directional Selection",
-  context: `Refer to graph A of Model 1 — Directional Selection.`,
+  title: "Q4 — What the tree represents",
   questions: [
-    `How is the population that has experienced selection different from the original population?`,
-    `Fitness is defined as the relative ability of an individual (or population) to survive, reproduce, and pass on genes. Which individuals in the original population appear to display better fitness?`,
-    `As a group, propose some characteristics of the environment that could lead to the population changes illustrated in graph A.`
+    `In a complete sentence, describe what the branch points and lines in a phylogenetic tree represent.`
   ]
 },
 {
-  title: "Q5 — Graph B: Disruptive Selection",
-  context: `Refer to graph B of Model 1 — Disruptive Selection.`,
+  title: "Q5 — Which branch has more descendants",
   questions: [
-    `How is the population that has experienced selection different from the original population?`,
-    `Which individuals in the original population appear to display better fitness?`,
-    `As a group, propose some characteristics of the environment that could lead to the population changes illustrated in graph B.`
+    `Which of the two branches from the common ancestor in Model 1 has the most living descendants?`
   ]
 },
 {
-  title: "Q6 — Graph C: Stabilizing Selection",
-  context: `Refer to graph C of Model 1 — Stabilizing Selection.`,
+  title: "Q6 — Red Panda's closest relative",
   questions: [
-    `How is the population that has experienced selection different from the original population?`,
-    `Which individuals in the original population appear to display better fitness?`,
-    `As a group, propose some characteristics of the environment that could lead to the population changes illustrated in graph C.`
+    `According to the phylogenetic tree in Model 1, the Red Panda is most closely related to which animal?`
   ]
 },
 {
-  title: "Q7 — Defining the three types",
-  context: `As a group, define each of the following terms in a grammatically correct sentence. Each definition should contain all four of these words: population, selection, fitness, and environment.`,
+  title: "Q7 — Comparing relatedness",
   questions: [
-    `Define directional selection.`,
-    `Define disruptive selection.`,
-    `Define stabilizing selection.`
+    `Which are more closely related: the Giant Panda and the Red Panda, or the Giant Panda and the Polar Bear? Justify your answer using grammatically correct sentences.`
   ]
 },
 {
-  title: "Q8 — Classify the scenario",
-  context: `In each of the following examples, describe the likely outcome due to the environmental pressure, and state the type of selection. Justify your choice.`,
+  title: "Q8 — Counting bases",
   questions: [
-    `Finches with a small beak cannot crack open seeds.`,
-    `Human babies with very high or very low birth weights have a higher mortality rate.`,
-    `A population of seed-cracker finches feeds on seeds available in two sizes, small or large.`,
-    `Overfishing occurs in two rivers in British Columbia, Canada, where larger salmon are preferentially caught.`
+    `How many bases are found in each of the DNA samples 1–4, as well as in the DNA from Organism A, in Model 2?`
   ]
 },
 {
-  title: "Q9 — Who can produce offspring?",
+  title: "Q9 — Finding the perfect match",
   questions: [
-    `Refer to Model 2. Identify the pairs of organisms that are able to produce offspring.`
+    `Using your knowledge of base-pairing, which DNA sample in Model 2 will be 100% complementary to Organism A?`
   ]
 },
 {
-  title: "Q10 — Same species?",
+  title: "Q10 — The next-closest sample",
   questions: [
-    `Which pair of organisms in Model 2 are members of the same species?`
+    `Which other DNA sample in Model 2 is likely to pair with one of the strands from Organism A?`
   ]
 },
 {
-  title: "Q11 — What's the missing criteria?",
+  title: "Q11 — Counting mismatches",
   questions: [
-    `Consider all of the pairs of organisms in Model 2 that are NOT of the same species. What criteria are missing in all cases that could be used to define a species?`
+    `How many of the total number of base pairs in the sample you chose for the previous question are noncomplementary between the strands?`
   ]
 },
 {
-  title: "Q12 — Horses and donkeys",
-  context: `A common farming practice is to breed a female horse with a male donkey. The result is a very robust animal — the mule. Most mules, however, are sterile, and therefore cannot reproduce.`,
+  title: "Q12 — Calculating sequence divergence",
   questions: [
-    `Are horses and donkeys members of the same species? Justify your answer with a specific example from Model 2.`
+    `Convert the number of noncomplementary pairs you just found into a percentage of the total base pairs. This is called the sequence divergence.`
   ]
 },
 {
-  title: "Q13 — Birds with different courtship rituals",
-  context: `Many species of birds have elaborate mating rituals that include bird calls, nest construction, and courtship displays. A researcher is comparing two populations of birds with similar morphology that live in similar niches. Male birds in one population build a nest before attempting to court a female, while males in the other population build the nest in cooperation with the female.`,
+  title: "Q13 — The remaining two samples",
   questions: [
-    `Is it likely the researcher will classify these birds as the same species? Justify your reasoning.`
+    `Calculate the sequence divergence for the remaining two samples. Check your calculations within your group.`
   ]
 },
 {
-  title: "Q14 — Directional selection and speciation",
+  title: "Q14 — Filling in the table",
   questions: [
-    `Could directional selection lead to the creation of a new species? Justify your reasoning using what you've learned from Models 1 and 2.`
+    `Use your calculations to fill in a table listing each sample and its sequence divergence, from most homologous to least homologous. (Sample 3 is already given for you: 0%.)`
   ]
 },
 {
-  title: "Q15 — Disruptive selection and speciation",
+  title: "Q15 — Most closely related sample",
   questions: [
-    `Could disruptive selection lead to the creation of a new species? Justify your reasoning using what you've learned from Model 2.`
+    `Based on your calculations, which sample from Model 2 is from an organism that is most closely related to Organism A?`
   ]
 },
 {
-  title: "Q16 — Stabilizing selection and speciation",
+  title: "Q16 — What divergence tells us",
   questions: [
-    `Could stabilizing selection lead to the creation of a new species? Justify your reasoning using what you've learned from Model 2.`
+    `With your group, describe how DNA sequence divergence can give scientists information about relatedness.`
+  ]
+},
+{
+  title: "Q17 — Building the tree",
+  questions: [
+    `Fill in the phylogenetic tree with Samples 1 through 4 to summarize the relatedness of the organisms that supplied the samples.`
+  ]
+},
+{
+  title: "Q18 — Reading Model 3",
+  questions: [
+    `How many different species are represented in the cytochrome c amino acid sequences in Model 3?`,
+    `What do the individual letters in Model 3 represent?`,
+    `What do the asterisks in Model 3 represent?`
+  ]
+},
+{
+  title: "Q19 — Predicting divergence",
+  context: `Circle the pairing of organisms from Model 3 that you predict would have the most divergence in their DNA. Support your choices with a group discussion about morphology (observable characteristics and structure), ecology, and lifestyles of the animals.`,
+  questions: [
+    `Whale and human, or whale and tuna — which pairing do you predict has more divergence?`,
+    `Pig and rhesus monkey, or pig and chicken — which pairing do you predict has more divergence?`,
+    `Tuna and fly, or tuna and chicken — which pairing do you predict has more divergence?`
+  ]
+},
+{
+  title: "Q20 — Counting differences from Human",
+  context: `Read This! Cytochrome c is a protein shared by many organisms due to its vital role in cellular respiration. Over time (billions of years), mutations have occurred in the cytochrome c gene that do not affect the function of the protein — these are called neutral mutations. By looking at these mutations, scientists can predict when organisms diverged from a common ancestor and from each other.\n\nRefer to Model 3. Write down the number of differences between the amino acid sequence of cytochrome c in a human and each of the following organisms.`,
+  questions: [
+    `Tuna`,
+    `Whale`,
+    `Rhesus Monkey`,
+    `Chicken`,
+    `Pig`,
+    `Yeast`,
+    `Fly`
+  ]
+},
+{
+  title: "Q21 — Most and least related",
+  questions: [
+    `Based on the differences in amino acid sequences, which organism are humans most closely related to?`,
+    `Which organism are humans most distantly related to?`
+  ]
+},
+{
+  title: "Q22 — Building the Model 3 tree",
+  questions: [
+    `Enter the names of the seven organisms from Model 3 into the tree, to illustrate a phylogenetic relationship between these organisms and humans, as suggested by the cytochrome c data.`
+  ]
+},
+{
+  title: "Q23 — Comparing your two predictions",
+  questions: [
+    `How do your predictions about relatedness based on morphology, ecology, and lifestyle (from Question 19) compare to the relatedness information in the phylogenetic tree you just built from DNA data (Question 22)?`
+  ]
+},
+{
+  title: "Q24 — Circling the mammals",
+  questions: [
+    `Circle all of the mammals in the phylogenetic tree you just built. How does the tree illustrate the fact that those animals are all members of the same class?`
+  ]
+},
+{
+  title: "Q25 — Looking for a pattern",
+  questions: [
+    `Compare the differences in amino acid sequences among the mammals with the differences in the other animal classes. Is there a pattern?`
+  ]
+},
+{
+  title: "Q26 — A single protein's worth of evidence",
+  questions: [
+    `Should scientists infer evolutionary relationships based on data from a single protein? Justify your answer in complete sentences.`
   ]
 },
 {
@@ -881,7 +971,7 @@ function clearFlag(idx){
 // anywhere else. Trade-off: scoped to one browser, not one account.
 async function saveProgress(){
   try{
-    localStorage.setItem('pogil_progress_selection_speciation', JSON.stringify({
+    localStorage.setItem('pogil_progress_phylogenetic_trees', JSON.stringify({
       stepIdx, chosenExtension, histories, groupSummaries, scores, activeSeconds
     }));
   }catch(e){
@@ -891,7 +981,7 @@ async function saveProgress(){
 
 async function loadProgress(){
   try{
-    const raw = localStorage.getItem('pogil_progress_selection_speciation');
+    const raw = localStorage.getItem('pogil_progress_phylogenetic_trees');
     return raw ? JSON.parse(raw) : null;
   }catch(e){
     return null; // nothing saved yet, or storage unavailable -- start fresh
@@ -900,7 +990,7 @@ async function loadProgress(){
 
 async function clearProgress(){
   try{
-    localStorage.removeItem('pogil_progress_selection_speciation');
+    localStorage.removeItem('pogil_progress_phylogenetic_trees');
   }catch(e){ /* nothing to clear */ }
 }
 
@@ -975,7 +1065,7 @@ async function callGroup(studentMessage){
     ? `\n\n${studentName || 'The student'}'S OWN ANSWERS FROM THE INDIVIDUAL-WORK PARTS OF THIS QUESTION (this is exactly what they wrote -- bring it into the discussion directly and specifically, don't just vaguely gesture at it or reword it into something generic):\n${individualAnswers.map(a => `(${a.letter}): "${a.text}"`).join('\n')}`
     : '';
 
-  const system = `You are simulating three students -- Jordan, Maya, Theo -- in a small online peer-learning group working through a POGIL biology activity on selection and speciation, alongside a fourth real student named ${studentName || 'the student'}. This is for a community college biology class.
+  const system = `You are simulating three students -- Jordan, Maya, Theo -- in a small online peer-learning group working through a POGIL biology activity on phylogenetic trees, alongside a fourth real student named ${studentName || 'the student'}. This is for a community college biology class.
 
 The real student's name is "${studentName || '(not given)'}" -- address them by name sometimes, the way real teammates naturally would (e.g. "yeah, ${studentName || 'good point'}, that tracks" or opening a question with their name), but not in every single message -- that would feel robotic. A rough guide: name them roughly once every 2-4 peer turns, not every turn.
 
@@ -988,7 +1078,7 @@ Opening a new question (when the student hasn't spoken yet this step): vary how 
 
 Pedagogical rule: across the conversation, vary peer contributions between three types:
 1. "supportive" -- a normal, correct, on-topic contribution.
-2. "misconception" -- a peer states something that SOUNDS plausible but is actually scientifically/logically wrong about selection or speciation (e.g. assuming producing any offspring together means two organisms are the same species -- ignoring hybrid sterility/inviability; mixing up which graph shape goes with which type of selection; claiming natural selection alone is guaranteed to eventually produce a new species; assuming geographic separation by itself is enough to call two populations different species without addressing reproductive isolation, etc). State it confidently, as a peer genuinely would, with no tell.
+2. "misconception" -- a peer states something that SOUNDS plausible but is actually scientifically/logically wrong about phylogenetics (e.g. assuming branch LENGTH on the page visually encodes time or relatedness rather than the time axis actually doing that; treating a "polytomy" -- a node splitting three or four ways at once -- as if it must secretly be a strict one-at-a-time sequence; assuming more total amino acid differences always means a species is definitely less related without considering it could be measurement noise; assuming DNA complementarity works by matching identical bases (A-A, G-G) instead of A-T and G-C pairing; assuming two organisms sharing a recent common ancestor with a THIRD organism means they're closely related to each other, etc). State it confidently, as a peer genuinely would, with no tell.
 3. "socratic_probe" -- a peer asks a genuinely good probing question that exposes a gap in reasoning, without stating anything wrong themselves. This is a deliberate, occasional device, not a personality trait Theo (or anyone) uses constantly.
 
 Do NOT use a misconception or socratic_probe on every turn -- most turns should be "supportive", INCLUDING most of Theo's turns specifically. Roughly 1 in every 3-4 peer turns total should be type 2 or 3 (across all three personas combined, not 1-in-3-4 for each persona individually) -- so if Theo speaks three times in a step, one or two of those should just be ordinary supportive contributions, not every single one turned into a probing question. Never let Maya (Recorder) be the one who states misconceptions more than once per step -- spread it across Jordan and Theo too. Keep the group's overall trajectory moving toward a correct understanding of the current question, and keep the pace brisk -- this is meant to feel like a quick real conversation, not an interrogation.
@@ -1005,15 +1095,17 @@ Ground every turn in the actual content of the current POGIL question below -- d
 
 If the student's own individual-work answers are provided below, this question is the "compare notes" moment right after solo work -- open by having a peer directly reference what the student actually wrote (quote or closely paraphrase it, don't generalize it away), and compare it with what the peers came up with on their own. This should feel like real teammates comparing their individual answers, not like the peers are unaware the student already answered.
 
-BACKGROUND ONLY -- these describe Model 1 and Model 2, the two diagrams in the students' own printed handout:
+BACKGROUND ONLY -- these describe Model 1, Model 2, and Model 3, the three diagrams in the students' own printed handout:
 
 MODEL 1: ${MODEL1_REFERENCE}
 
 MODEL 2: ${MODEL2_REFERENCE}
 
-This is FIXED, CANONICAL CONTENT -- identical for every student and every run of this activity, with no variation whatsoever. Any time a peer states anything about either model -- which graph shows what, which pair produces offspring, which pairs are or aren't the same species -- it must exactly match the text above, every single time. Never invent a detail (a numeric axis value, an extra pair being "the same species," a different shape of curve) that isn't stated above. Do not invent any further visual detail beyond what's stated (no colors, exact numbers, or other embellishments not given). If the student describes something about their actual diagram that isn't covered above, treat the student's own description as ground truth (you cannot see the image; they can) rather than contradicting them.
+MODEL 3: ${MODEL3_REFERENCE}
 
-If the current question is asking the group to look at Model 1 or Model 2 and identify or recall something directly from the diagram themselves (like what the graphs' axes compare, or which pairs in Model 2 produce offspring), do NOT have a peer simply recite the answer as a flat fact -- but also do NOT have a peer state an inaccurate or incomplete version, not even as a realistic "wrong guess." Keep the realism in tone and pacing only: e.g. a peer can say "let me check mine" or ask the student to read theirs off first, or take a beat before confirming -- but whatever content a peer eventually states must be correct and complete on the first try. For later questions that reason about material already established earlier in the activity, take it as already settled and refer back to it naturally, again always matching the reference above exactly.
+This is FIXED, CANONICAL CONTENT -- identical for every student and every run of this activity, with no variation whatsoever. Any time a peer states anything about any of the three models -- the tree's branch structure, the DNA sequences and their divergence percentages, the amino-acid difference counts -- it must exactly match the text above, every single time. Never invent a detail (an exact million-year figure that wasn't given, a different sequence, a made-up amino-acid count) that isn't stated above. The ONE place a genuine tie exists in the data (Whale/Pig, both at 10 differences from Human) should be treated as a real, open discussion point, not silently resolved either way. If the student describes something about their actual diagram that isn't covered above, treat the student's own description as ground truth (you cannot see the image; they can) rather than contradicting them.
+
+If the current question is asking the group to look at one of the three models and identify or recall something directly from it themselves (like what the tree's axes represent, or how many bases are in a DNA sample), do NOT have a peer simply recite the answer as a flat fact -- but also do NOT have a peer state an inaccurate or incomplete version, not even as a realistic "wrong guess." Keep the realism in tone and pacing only: e.g. a peer can say "let me check mine" or ask the student to read theirs off first, or take a beat before confirming -- but whatever content a peer eventually states must be correct and complete on the first try. For later questions that reason about material already established earlier in the activity, take it as already settled and refer back to it naturally, again always matching the reference above exactly.
 
 Respond with 1 to 3 peer turns reacting to the latest development (the student's message if given, otherwise just opening discussion of the question). Do not have all three speak every time -- 1 or 2 turns is often enough.
 
@@ -1155,7 +1247,7 @@ document.getElementById('restartBtn').onclick = async ()=>{
 
 function generateTranscript(){
   const lines = [];
-  lines.push(`Selection and Speciation`);
+  lines.push(`Phylogenetic Trees`);
   lines.push(`Simulated study group — responses for ${studentName || 'student'}`);
   lines.push(`Downloaded: ${new Date().toLocaleString()}`);
   lines.push('');
@@ -1191,7 +1283,7 @@ document.getElementById('downloadBtn').onclick = ()=>{
   const a = document.createElement('a');
   a.href = url;
   const safeName = (studentName || 'student').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
-  a.download = `${safeName}-selection-and-speciation-pogil.txt`;
+  a.download = `${safeName}-phylogenetic-trees-pogil.txt`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
